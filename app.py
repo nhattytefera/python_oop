@@ -15,16 +15,30 @@ class Employee:
     def apply_raise(self):
         self.pay = int(self.pay * Employee.raise_amount)
 
-    @classmethod
-    def set_raise_amt(cls, amount):
-        cls.raise_amount = amount
+    # @classmethod
+    # def set_raise_amt(cls, amount):
+    #     cls.raise_amount = amount
+
+    # @classmethod
+    # def from_string(cls, emp_str):
+    #     first, last, pay = emp_str.split('-')
+    #     return cls(first, last, pay)
+
+class Developer(Employee):
+    raise_amount = 1.10
+    def __init__(self, first, last, pay, prog_lang):
+        super().__init__(first, last, pay)
+        self.prog_lang = prog_lang
+
+class Manager(Employee):
+    def __init__(self, first, last, pay):
+        super().__init__(first, last, pay)
 
 
-emp1 = Employee('Nati', 'Tefera', 50000)
-emp2 = Employee('Bruick', 'Tefera', 60000)
+dev1 = Developer('Nati', 'Tefera', 50000, 'JavaScript')
+dev2 = Developer('Bruick', 'Tefera', 60000, 'Python')
 
-Employee.set_raise_amt(1.05)
 
-print(Employee.raise_amount)
-print(emp1.raise_amount)
-print(emp2.raise_amount)
+print(dev1.pay)
+dev1.apply_raise()
+print(dev1.pay)
