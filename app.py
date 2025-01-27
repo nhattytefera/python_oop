@@ -15,14 +15,14 @@ class Employee:
     def apply_raise(self):
         self.pay = int(self.pay * Employee.raise_amount)
 
-    # @classmethod
-    # def set_raise_amt(cls, amount):
-    #     cls.raise_amount = amount
+    @classmethod
+    def set_raise_amt(cls, amount):
+        cls.raise_amount = amount
 
-    # @classmethod
-    # def from_string(cls, emp_str):
-    #     first, last, pay = emp_str.split('-')
-    #     return cls(first, last, pay)
+    @classmethod
+    def from_string(cls, emp_str):
+        first, last, pay = emp_str.split('-')
+        return cls(first, last, pay)
 
 class Developer(Employee):
     raise_amount = 1.10
@@ -31,14 +31,29 @@ class Developer(Employee):
         self.prog_lang = prog_lang
 
 class Manager(Employee):
-    def __init__(self, first, last, pay):
+    def __init__(self, first, last, pay, employees=None):
         super().__init__(first, last, pay)
+        if employees is None:
+            self.employees = []
+        else:
+            self.employees = employees
+
+    def add_emp(self, emp):
+        if emp not in self.employees:
+            self.employees.append(emp)
+    
+    def remove_emp(self, emp):
+        if emp in self.employees:
+            self.employees.remove(emp)
+
+    def print_emps(self):
+        for emp in self.employees:
+            print('-->', emp.fullname())
 
 
 dev1 = Developer('Nati', 'Tefera', 50000, 'JavaScript')
 dev2 = Developer('Bruick', 'Tefera', 60000, 'Python')
 
+mgr1 = Manager('Tefera', 'Wodajo', 90000, [dev1])
 
-print(dev1.pay)
-dev1.apply_raise()
-print(dev1.pay)
+print(issubclass(Manager, Employee))
